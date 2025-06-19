@@ -1,0 +1,27 @@
+CREATE DATABASE Meal
+
+USE Meal
+
+CREATE TABLE Meals(
+Id INT PRIMARY KEY IDENTITY,
+[Name] NVARCHAR(30),
+Price DECIMAL)
+
+CREATE TABLE Tables(
+Id INT PRIMARY KEY IDENTITY,
+[No] NVARCHAR(30))
+
+CREATE TABLE Orders(
+Id INT PRIMARY KEY IDENTITY,
+[Date] DATETIME,
+MealId INT,
+TableId INT, 
+FOREIGN KEY (MealId) REFERENCES Meals(Id),
+FOREIGN KEY (TableId) REFERENCES Tables(Id))
+
+SELECT t.*,  COUNT(o.Id) AS OrderCount FROM Tables t
+LEFT JOIN 
+Orders o ON o.TableId = t.Id
+GROUP BY 
+t.Id, t.Name, t.Seats 
+
